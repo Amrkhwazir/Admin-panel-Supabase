@@ -10,21 +10,50 @@ export default function NewProduct() {
   const [disc, setDisc] = useState("")
   const [cat, setCat] = useState("")
   const [price, setPrice] = useState("")
+  const [qty, setQty] = useState(null)
   const [stock, setStock] = useState(null)
+  const [file, setFile] = useState(null);
   const [formError, setFormError] = useState(null)
   const navigate = useNavigate()
+
+
+  // const avatarFile = async (e) => {
+
+  //   const file = e.target.files[0]
+
+  //   console.log(file);
+
+    
+  // const { data, error } = await supabase
+  // .storage
+  // .from('productImages')
+  // .upload('images/avatar.png', file)
+
+  // if(error){
+  //   console.log(error)
+  //   setFormError(error)
+
+  // }if(data){
+  //   console.log(data);
+  //   setFile(file)
+  //   // navigate("/")
+    
+  // }}
+
+
 
   const handleClick = async (e) => {
     e.preventDefault()
 
-    if(!title || !disc || !cat || !price || !stock){
+    if(!title || !disc || !cat || !price || !stock || qty){
       setFormError("All Feild required to be fill")
       return
   }
 
+    
   const {data, error} = await supabase
-  .from("products").
-  insert([{title,disc,cat,price,stock}])
+  .from("products")
+  .insert([{title,disc,cat,price,stock}])
   .select()
 
   if(error){
@@ -39,6 +68,8 @@ export default function NewProduct() {
    
 
 }
+
+
 
   return (
     <div className="newProduct">
@@ -73,8 +104,17 @@ export default function NewProduct() {
           <input
             name="price"
             type="number"
-            placeholder="100"
+            placeholder="Quantity"
             onChange={(e) => setPrice(e.target.value)}
+          />
+        </div>
+        <div className="addProductItem">
+          <label>Quantity</label>
+          <input
+            name="price"
+            type="number"
+            placeholder="100"
+            onChange={(e) => setQty(e.target.value)}
           />
         </div>
         <div className="addProductItem">
@@ -97,6 +137,7 @@ export default function NewProduct() {
           <input
             type="file"
             id="file"
+            accept="png,jpeg,jpg"
           />
         </div>
         </div>

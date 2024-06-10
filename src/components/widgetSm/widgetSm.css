@@ -60,3 +60,12 @@
     font-size: 16px !important;
     margin-right: 5px;
 }
+
+.widgetSmTr{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.widgetSmTh{width: 50px;text-align: start; margin-right: 30px; margin-top: 10px;}

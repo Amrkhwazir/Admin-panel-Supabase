@@ -4,7 +4,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import Login from "./pages/login/Login"
 import NewUser from "./pages/newUser/NewUser"
 import Topbar from "./components/topbar/Topbar"
 import Sidebar from "./components/sidebar/Sidebar"
@@ -16,10 +15,7 @@ import NewProduct from "./pages/newProduct/NewProduct"
 import UserList from "./pages/userList/UserList"
 
 const router = createBrowserRouter([
-  {
-    path: "/login",
-    element: <Login />,
-  },
+  
   {
     path: "/",
     element: <><Topbar /><div className="container"><Sidebar /> <Home /></div></>,

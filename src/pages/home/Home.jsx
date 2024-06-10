@@ -4,59 +4,70 @@ import "./home.css";
 // import { userData } from "../../dummyData";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
-// import {useState } from "react";
+import {useEffect, useMemo, useState } from "react";
+import supabase from "../../config/supabase";
 
 export default function Home() {
-  // const [userStats, setUserStats] = useState([]);
+  const [userStats, setUserStats] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
 
-  // const MONTHS = useMemo(
-  //   () => [
-  //     "Jan",
-  //     "Feb",
-  //     "Mar",
-  //     "Apr",
-  //     "May",
-  //     "Jun",
-  //     "Jul",
-  //     "Agu",
-  //     "Sep",
-  //     "Oct",
-  //     "Nov",
-  //     "Dec",
-  //   ],
-  //   []
-  // );
 
-  // useEffect(() => {
-  //   const getStats = async () => {
-  //     try {
-  //       // const res = await userRequest.get("/users/stats");
-  //       const res = "";
-  //       res.data.map((item) =>
-  //         setUserStats((prev) => [
-  //           ...prev,
-  //           { name: MONTHS[item._id - 1], "Active User": item.total },
-  //         ])
-  //       );
-  //     } catch {}
-  //   };
-  //   getStats();
-  // }, [MONTHS]);
+  const MONTHS = useMemo(
+    () => [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "August",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const getStats = async () => {
+     
+      const {data, error} = await supabase
+    .from("clients")
+    .select()
+
+    if(error) {
+      setFetchError("could not fetch the users")
+      console.log(error);
+    }if(data){
+
+      data.map((item) =>
+        setUserStats((prev) => [
+          ...prev,
+          { months: MONTHS[item.id - 1], "Active_User": item.status },
+        ])
+      );
+      }
+       
+        
+    
+    };
+    getStats();
+  }, [MONTHS]);
 
   return (
-    <div className="home">
-      
+    <div className="home">  
       <FeaturedInfo />
-      
       <Chart
-        // data={userStats}
+        data={userStats}
         title="User Analytics"
         grid
-        dataKey="Active User"
+        dataKey="Active_User"
       />
       <div className="homeWidgets">
         <WidgetSm />
-        {/* <WidgetLg /> */}
+        <WidgetLg />
       </div>
     </div>
   );

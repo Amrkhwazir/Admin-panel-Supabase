@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import "./widgetLg.css";
 import {format} from "timeago.js"
+import supabase from "../../config/supabase";
 
 export default function WidgetLg() {
   const [orders, setOrders] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
     const getOrders = async () => {
-      try {
-        // const res = await userRequest.get("orders");
-        const res = "";
-        setOrders(res.data);
-      } catch {}
+      const {data, error} = await supabase
+    .from("clients")
+    .select()
+
+    if(error) {
+      setFetchError("could not fetch the users")
+      console.log(error);
+    }if(data){
+      setOrders(data)
+      }
+   
     };
     getOrders();
   }, []);
@@ -29,14 +37,14 @@ export default function WidgetLg() {
           <th className="widgetLgTh">Status</th>
         </tr>
         {orders.map((order) => (
-          <tr className="widgetLgTr" key={order._id}>
+          <tr className="widgetLgTr" key={order.id}>
             <td className="widgetLgUser">
-              <span className="widgetLgName">{order.userId}</span>
+              <span className="widgetLgName">{order.username}</span>
             </td>
-            <td className="widgetLgDate">{format(order.createdAt)}</td>
-            <td className="widgetLgAmount">${order.amount}</td>
+            <td className="widgetLgDate">{format(order.created_at)}</td>
+            <td className="widgetLgAmount">${order.transiction}</td>
             <td className="widgetLgStatus">
-              <Button type={order.status} />
+              <Button type={order.status == "yes" ? ("Approved") : ("Pending")} />
             </td>
           </tr>
         ))}

@@ -27,9 +27,18 @@ useEffect(()=>{
       fetchUsers();
       },[])
 
-  // const handleDelete = (id) => {
-  //   setData(data.filter((item) => item.id !== id));
-  // };
+  const deleteHandler = async (id) => {
+    const { error } = await supabase
+  .from('clients')
+  .delete()
+  .eq('id', id)
+
+  if(error){
+    console.log(error)
+  }else{
+    setUsers(users.filter((item) => item.id !== id));
+  }
+  };
   
 
   return (
@@ -54,24 +63,24 @@ useEffect(()=>{
     </tr> 
    {
     users ? ( users.map((user) => (
-      <tr className="userListUserData">
+      <tr className="userListUserData" key={user.id}>
       <input type="checkbox" />
       <span style={{marginRight: "10px"}}></span>
       <td className="userId">{user.id}</td>
-      <td  className="userListImg">{user.img}</td>
+      <img className="userListImg" src={user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"} />
       <td  className="userName">{user.username}</td>
        <span style={{marginRight: "-20px"}}></span>
       <td className="userEmail">{user.email}</td>
        <span style={{marginRight: "10px"}}></span>
-      <td className="userStatus">{user.Status}</td>
+      <td className="userStatus">{user.status == "yes" ? ("Active") : ("No Active")}</td>
        <span style={{marginRight: "10px"}}></span>
-      <td className="userTransiction">{user.transiction}</td>
+      <td className="userTransiction">${user.transiction}</td>
        <span style={{marginRight: "10px"}}></span>
       <td className="userAction">
         <Link to={"/user/" + user.id}>
     <Edit style={{color: "blue", cursor: "pointer"}} />  
         </Link>
-    <DeleteOutlined style={{color: "red", cursor: "pointer"}} />
+    <DeleteOutlined style={{color: "red", cursor: "pointer"}} onClick={() => deleteHandler(user.id)} />
       </td>
       </tr>  
     )) ) : <h1 className="error" >{fetchError}</h1>

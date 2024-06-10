@@ -10,6 +10,8 @@ export default function NewUser() {
   const [password, setPassword] = useState("")
   const [phone, setPhone] = useState(null)
   const [address, setAddress] = useState("")
+  const [status, setStatus] = useState("")
+  const [transiction, setTransiction] = useState(null)
   const [formError, setFormError] = useState(null)
   const navigate = useNavigate()
 
@@ -18,14 +20,14 @@ export default function NewUser() {
     e.preventDefault()
 
 
-    if(!username || !email || !password || !phone || !address){
+    if(!username || !email || !password || !phone || !address || !status || !transiction){
 return setFormError("Kindly fill all the fields")
 
     }
     
     const {data, error} = await supabase
     .from("clients")
-    .insert([{username, email, password, phone, address}])
+    .insert([{username, email, password, phone, address, status, transiction}])
     .select()
 
     if(error){
@@ -34,11 +36,10 @@ return setFormError("Kindly fill all the fields")
 
     }if(data){
       console.log(data);
-      
+      navigate("/users")
     }
      
-    navigate("/users")
-
+console.log(formError);
   }
   return (
     <div className="newUser">
@@ -63,6 +64,25 @@ return setFormError("Kindly fill all the fields")
         <div className="newUserItem">
           <label>Address</label>
           <input type="text" placeholder="New York | USA" onChange={(e) => setAddress(e.target.value)}/>
+        </div>
+        <div className="newUserItem">
+          <label>Transiction</label>
+          <input type="number" placeholder="$1200" onChange={(e) => setTransiction(e.target.value)}/>
+        </div>
+        <div className="newUserItem">
+          <label>Active</label>
+          <select className="newUserSelect" name="active" id="active" onChange={(e) => setStatus(e.target.value)}>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div className="addProductItem">
+          <label>Image</label>
+          <input
+            type="file"
+            id="file"
+            accept="png,jpeg,jpg"
+          />
         </div>
         <button className="newUserButton" type="submit">Create</button>
       </form>

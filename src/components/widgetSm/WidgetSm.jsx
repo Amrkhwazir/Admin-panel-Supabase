@@ -28,6 +28,11 @@ export default function WidgetSm() {
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
+      <tr className="widgetSmTr">
+          <th className="widgetSmTh">Image</th>
+          <th className="widgetSmTh">Name</th>
+          <th className="widgetSmTh">Status</th>
+        </tr>
         {users.map((user) => (
           <li className="widgetSmListItem" key={user.id}>
             <img
@@ -40,10 +45,6 @@ export default function WidgetSm() {
             />
             <div className="widgetSmUser">
               <span className="widgetSmUsername">{user.username}</span>
-             
-            </div>
-            <div className="widgetSmUser">
-              <span className="widgetSmUsername">{user.email}</span>
              
             </div>
             <button className="widgetSmButton">

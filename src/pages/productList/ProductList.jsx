@@ -28,6 +28,21 @@ useEffect(()=>{
       fetchUsers();
       },[])
 
+      const deleteHandler = async (id) => {
+        const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id)
+    
+      if(error){
+        console.log(error)
+      }else{
+        setProducts(products.filter((item) => item.id !== id));
+      }
+      };
+      
+    
+
 
   return (
     <div className="productList">
@@ -39,7 +54,7 @@ useEffect(()=>{
       <span style={{height: "15px", border: "1px solid gray", marginRight: "10px", opacity: 0.5}}></span>
       <td  className="products">Product</td>
       <span style={{height: "15px", border: "1px solid gray", marginRight: "10px", opacity: 0.5}}></span>
-      <td className="instock">InStock</td>
+      <td className="instock">Stock</td>
       <span style={{height: "15px", border: "1px solid gray", marginRight: "10px", opacity: 0.5}}></span>
       <td className="productPrice">Price</td>
       <span style={{height: "15px", border: "1px solid gray", marginRight: "10px", opacity: 0.5}}></span>
@@ -51,10 +66,10 @@ useEffect(()=>{
       <input type="checkbox" />
       <span style={{marginRight: "10px"}}></span>
       <td className="productId">{product.id}</td>
-      <td  className="productListImg">{product.productImg}</td>
+      <img className="productListImg" src={product.productImg || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}/>
       <td  className="products">{product.title}</td>
        <span style={{marginRight: "-20px"}}></span>
-      <td className="instock">{product.stock}</td>
+      <td className="instock">{product.stock == "true" ? "inStock" : "out of stock"}</td>
        <span style={{marginRight: "10px"}}></span>
       <td className="productPrice">{product.price}</td>
        <span style={{marginRight: "10px"}}></span>
@@ -62,7 +77,7 @@ useEffect(()=>{
         <Link to={"/product/" + product.id}>
     <Edit style={{color: "blue", cursor: "pointer"}} />  
         </Link>
-    <DeleteOutlined style={{color: "red", cursor: "pointer"}} />
+    <DeleteOutlined style={{color: "red", cursor: "pointer"}} onClick={() => deleteHandler(product.id)} />
       </td>
       </tr>  
     )) ) : <h1 className="error" >{fetchError}</h1>
