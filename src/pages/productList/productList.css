@@ -1,0 +1,54 @@
+.productList{
+    flex: 4;
+    border:  1px solid gainsboro;
+    border-radius: 8px;
+}
+
+.productListImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+
+  .productListUser {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    height: 50px;
+    border: 1px solid gainsboro;
+  
+  }
+  .productListUserData {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    min-height: 50px;
+    border:  1px solid gainsboro;
+  }
+  .productListUserData:hover {
+    background-color: rgb(242, 242, 242);
+  }
+  
+  .productId{ width: 120px;}
+  .products{width: 250px;}
+  .instock{width: 200px;}
+  .productPrice{width: 150px;}
+  .productAction{width: 160px; display: flex; gap: 5px;}
+  
+  .productListImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .error{
+    text-align: center;
+    margin-top: 100px;
+    color: gray;
+  }
+  
+  
