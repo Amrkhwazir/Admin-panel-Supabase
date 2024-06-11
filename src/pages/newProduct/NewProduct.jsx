@@ -14,20 +14,23 @@ export default function NewProduct() {
   const [stock, setStock] = useState(null)
   const [file, setFile] = useState(null);
   const [formError, setFormError] = useState(null)
+  const [productImg, setProductImg] = useState('');
   const navigate = useNavigate()
 
 
   const avatarFile = async (e) => {
 
     const file = e.target.files[0]
-
-    console.log(file);
-
+    setFile(file)
+    
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `${fileName}`;
     
   const { data, error } = await supabase
   .storage
   .from('productImages')
-  .upload('avatar.png', file)
+  .upload(filePath, file)
 
   if(error){
     console.log(error)
@@ -35,17 +38,31 @@ export default function NewProduct() {
 
   }if(data){
     console.log(data);
-    setFile(file)
-    // navigate("/")
-    
-  }}
+  }
 
+  const {data: publicUrl , error: urlError } = supabase
+  .storage
+  .from('productImages')
+  .getPublicUrl(filePath) 
 
+  if(urlError){
+    console.log(error)
+    return
 
+  }if(publicUrl){
+
+    console.log(publicUrl.publicUrl);
+    setProductImg(publicUrl.publicUrl)
+  }
+}
+
+console.log(productImg, file);
   const handleClick = async (e) => {
     e.preventDefault()
 
-    if(!title || !disc || !cat || !price || !stock || qty){
+    console.log(title, disc, cat, price, stock, qty, file);
+
+    if(!title || !disc || !cat || !price || !stock || !qty || !file){
       setFormError("All Feild required to be fill")
       return
   }
@@ -53,7 +70,7 @@ export default function NewProduct() {
     
   const {data, error} = await supabase
   .from("products")
-  .insert([{title,disc,cat,price,stock}])
+  .insert([{title,disc,cat,price,stock, productImg}])
   .select()
 
   if(error){
@@ -62,14 +79,14 @@ export default function NewProduct() {
 
   }if(data){
     console.log(data);
-    navigate("/")
+    navigate("/products")
     
   }
    
 
 }
 
-
+console.log(formError);
 
   return (
     <div className="newProduct">
