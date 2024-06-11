@@ -14,6 +14,7 @@ const [username, setUsername] = useState("")
 const [email, setEmail] = useState("")
 const [phone, setPhone] = useState(null)
 const [address, setAddress] = useState("")
+const [img, setImg] = useState("")
 const [formError, setFormError] = useState(null)
 
 const handleClick = async (e) => {
@@ -56,11 +57,13 @@ useEffect(() => {
       setEmail(data.email)
       setPhone(data.phone)
       setUsername(data.username)
+      setImg(data.img)
     }
   }
   fetchClient();
 }, [userId, navigate])
 
+console.log(img);
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -73,7 +76,7 @@ useEffect(() => {
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={img || "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"}
               alt=""
               className="userShowImg"
             />
