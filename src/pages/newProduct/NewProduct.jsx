@@ -17,28 +17,28 @@ export default function NewProduct() {
   const navigate = useNavigate()
 
 
-  // const avatarFile = async (e) => {
+  const avatarFile = async (e) => {
 
-  //   const file = e.target.files[0]
+    const file = e.target.files[0]
 
-  //   console.log(file);
+    console.log(file);
 
     
-  // const { data, error } = await supabase
-  // .storage
-  // .from('productImages')
-  // .upload('images/avatar.png', file)
+  const { data, error } = await supabase
+  .storage
+  .from('productImages')
+  .upload('avatar.png', file)
 
-  // if(error){
-  //   console.log(error)
-  //   setFormError(error)
+  if(error){
+    console.log(error)
+    setFormError(error)
 
-  // }if(data){
-  //   console.log(data);
-  //   setFile(file)
-  //   // navigate("/")
+  }if(data){
+    console.log(data);
+    setFile(file)
+    // navigate("/")
     
-  // }}
+  }}
 
 
 
@@ -117,12 +117,6 @@ export default function NewProduct() {
             onChange={(e) => setQty(e.target.value)}
           />
         </div>
-        <div className="addProductItem">
-          <label>Categories</label>
-          <input type="text" placeholder="jeans,skirts" onChange={(e) => setCat(e.target.value)} />
-        </div>
-        </div>
-        <div className="inputContainer">
         </div>
         <div className="inputContainer"> 
         <div className="addProductItem">
@@ -133,17 +127,23 @@ export default function NewProduct() {
           </select>
         </div>
         <div className="addProductItem">
+          <label>Categories</label>
+          <input type="text" placeholder="jeans,skirts" onChange={(e) => setCat(e.target.value)} />
+        </div>
+        </div>
+        <div className="inputContainer">
+        <div className="addProductItem">
           <label>Image</label>
           <input
             type="file"
             id="file"
-            accept="png,jpeg,jpg"
+            onChange={avatarFile}
           />
-        </div>
         </div>
         <button className="addProductButton" type="submit">
           Create
         </button>
+        </div>
       </form>
     </div>
   );

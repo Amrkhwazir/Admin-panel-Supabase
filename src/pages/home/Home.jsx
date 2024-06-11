@@ -45,7 +45,7 @@ export default function Home() {
       data.map((item) =>
         setUserStats((prev) => [
           ...prev,
-          { months: MONTHS[item.id - 1], "Active_User": item.status },
+          { months: MONTHS[item.id - 1], "Active_User": data.length },
         ])
       );
       }

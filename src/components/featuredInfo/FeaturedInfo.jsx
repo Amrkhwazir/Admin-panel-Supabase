@@ -24,13 +24,11 @@ export default function FeaturedInfo() {
     getIncome();
   }, []);
 
-  console.log(income);
   return (
     <div className="featured">
       <div className="featuredItem">
         <span className="featuredTitle">Revanue</span>
         <div className="featuredMoneyContainer">
-          {/* <span className="featuredMoney">${income[1]?.total}</span> */}
           <span className="featuredMoney">{income[0]?.price * income[0]?.qty}</span>
           <span className="featuredMoneyRate">
             %{Math.floor(10)}{" "}
