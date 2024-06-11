@@ -45,7 +45,7 @@ export default function FeaturedInfo() {
         <span className="featuredTitle">Sales</span>
         <div className="featuredMoneyContainer">
           <span className="featuredMoney">
-          {income[0].price * income[0].qty}
+          {income[0]?.price * income[0]?.qty}
           </span>
           <span className="featuredMoneyRate">
           {10 < 0 ? (
